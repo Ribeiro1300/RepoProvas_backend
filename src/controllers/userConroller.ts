@@ -4,6 +4,8 @@ import * as userService from "../services/userService";
 
 export async function getUsers(req: Request, res: Response) {
   try {
+    console.log(req.query);
+
     const users = await userService.getUsers();
     res.send(users);
   } catch (err) {
