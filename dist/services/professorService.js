@@ -35,33 +35,49 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+exports.getProfessorBySubject = exports.getProfessors = void 0;
 var typeorm_1 = require("typeorm");
-if (process.env.NODE_ENV === "production" &&
-    process.env.DATABASE_URL.indexOf("sslmode=require") === -1) {
-    process.env.DATABASE_URL += "?sslmode=require";
-}
-function connect() {
+var ProfessorBySubject_1 = __importDefault(require("../entities/ProfessorBySubject"));
+var Professor_1 = __importDefault(require("../entities/Professor"));
+var professorError_1 = __importDefault(require("../error/professorError"));
+function getProfessors() {
     return __awaiter(this, void 0, void 0, function () {
-        var connectionManager, connection;
+        var allProfessors;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, typeorm_1.getConnectionManager)()];
+                case 0: return [4 /*yield*/, (0, typeorm_1.getRepository)(Professor_1["default"]).find()];
                 case 1:
-                    connectionManager = _a.sent();
-                    connection = connectionManager.create({
-                        name: "default",
-                        type: "postgres",
-                        url: process.env.DATABASE_URL,
-                        entities: ["".concat(process.env.NODE_ENV === "production" ? "dist" : "src", "/entities/*.*")],
-                        ssl: process.env.NODE_ENV === "production"
-                    });
-                    return [4 /*yield*/, connection.connect()];
-                case 2:
-                    _a.sent();
-                    return [2 /*return*/, connection];
+                    allProfessors = _a.sent();
+                    if (allProfessors.length === 0) {
+                        throw new professorError_1["default"]("Nenhum professor encontrado!");
+                    }
+                    return [2 /*return*/, allProfessors];
             }
         });
     });
 }
-exports["default"] = connect;
+exports.getProfessors = getProfessors;
+function getProfessorBySubject(subject_id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var professors, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, typeorm_1.getRepository)(ProfessorBySubject_1["default"]).find({ subject_id: subject_id })];
+                case 1:
+                    professors = _a.sent();
+                    if (professors.length === 0) {
+                        throw new professorError_1["default"]("Nenhum professor encontrado!");
+                    }
+                    result = professors.map(function (info) {
+                        return info.name;
+                    });
+                    return [2 /*return*/, result];
+            }
+        });
+    });
+}
+exports.getProfessorBySubject = getProfessorBySubject;

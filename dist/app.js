@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -63,12 +44,18 @@ require("./setup");
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));
 require("reflect-metadata");
+var professorRouter_1 = __importDefault(require("./routers/professorRouter"));
+var subjectRouter_1 = __importDefault(require("./routers/subjectRouter"));
+var examRouter_1 = __importDefault(require("./routers/examRouter"));
+var serverMiddlewareErro_1 = __importDefault(require("./middleware/serverMiddlewareErro"));
 var database_1 = __importDefault(require("./database/database"));
-var userController = __importStar(require("./controllers/userConroller"));
 var app = (0, express_1["default"])();
 app.use((0, cors_1["default"])());
 app.use(express_1["default"].json());
-app.get("/users", userController.getUsers);
+app.use(examRouter_1["default"]);
+app.use(subjectRouter_1["default"]);
+app.use(professorRouter_1["default"]);
+app.use(serverMiddlewareErro_1["default"]);
 function init() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
