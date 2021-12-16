@@ -44,13 +44,13 @@ CREATE TABLE "professor_subject" (
 
 
 
-ALTER TABLE "exam" ADD CONSTRAINT "exam_fk0" FOREIGN KEY ("subject_id") REFERENCES "subject"("id");
-ALTER TABLE "exam" ADD CONSTRAINT "exam_fk1" FOREIGN KEY ("professor_id") REFERENCES "professor"("id");
+ALTER TABLE "exams" ADD CONSTRAINT "exams_fk0" FOREIGN KEY ("subject_id") REFERENCES "subjects"("id");
+ALTER TABLE "exams" ADD CONSTRAINT "exams_fk1" FOREIGN KEY ("professor_id") REFERENCES "professors"("id");
 
 
 
-ALTER TABLE "professor-subject" ADD CONSTRAINT "professor-subject_fk0" FOREIGN KEY ("subject_id") REFERENCES "subject"("id");
-ALTER TABLE "professor-subject" ADD CONSTRAINT "professor-subject_fk1" FOREIGN KEY ("professor_id") REFERENCES "professor"("id");
+ALTER TABLE "professor_subject" ADD CONSTRAINT "professor_subject_fk0" FOREIGN KEY ("subject_id") REFERENCES "subjects"("id");
+ALTER TABLE "professor_subject" ADD CONSTRAINT "professor_subject_fk1" FOREIGN KEY ("professor_id") REFERENCES "professors"("id");
 
 /*Disciplinas*/
 
