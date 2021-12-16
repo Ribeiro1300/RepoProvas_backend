@@ -35,33 +35,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+exports.getSubjects = void 0;
 var typeorm_1 = require("typeorm");
-if (process.env.NODE_ENV === "production" &&
-    process.env.DATABASE_URL.indexOf("sslmode=require") === -1) {
-    process.env.DATABASE_URL += "?sslmode=require";
-}
-function connect() {
+var Subject_1 = __importDefault(require("../entities/Subject"));
+var subjectError_1 = __importDefault(require("../error/subjectError"));
+function getSubjects() {
     return __awaiter(this, void 0, void 0, function () {
-        var connectionManager, connection;
+        var subjects;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, typeorm_1.getConnectionManager)()];
+                case 0: return [4 /*yield*/, (0, typeorm_1.getRepository)(Subject_1["default"]).find()];
                 case 1:
-                    connectionManager = _a.sent();
-                    connection = connectionManager.create({
-                        name: "default",
-                        type: "postgres",
-                        url: process.env.DATABASE_URL,
-                        entities: ["".concat(process.env.NODE_ENV === "production" ? "dist" : "src", "/entities/*.*")],
-                        ssl: process.env.NODE_ENV === "production"
-                    });
-                    return [4 /*yield*/, connection.connect()];
-                case 2:
-                    _a.sent();
-                    return [2 /*return*/, connection];
+                    subjects = _a.sent();
+                    if (subjects.length === 0) {
+                        throw new subjectError_1["default"]("Nenhuma disciplina encontrada!");
+                    }
+                    return [2 /*return*/, subjects];
             }
         });
     });
 }
-exports["default"] = connect;
+exports.getSubjects = getSubjects;

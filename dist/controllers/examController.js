@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,32 +55,55 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var typeorm_1 = require("typeorm");
-if (process.env.NODE_ENV === "production" &&
-    process.env.DATABASE_URL.indexOf("sslmode=require") === -1) {
-    process.env.DATABASE_URL += "?sslmode=require";
-}
-function connect() {
+exports.newExam = exports.getExams = void 0;
+var examService = __importStar(require("../services/examService"));
+function getExams(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var connectionManager, connection;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, typeorm_1.getConnectionManager)()];
+            try {
+                res.send("Olá");
+            }
+            catch (e) {
+                if (e.name === "ExamError") {
+                    return [2 /*return*/, res.status(404).send(e.message)];
+                }
+                next(e);
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.getExams = getExams;
+function newExam(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, name_1, type, subject_id, professor_id, link, result, e_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    _a = req.body, name_1 = _a.name, type = _a.type, subject_id = _a.subject_id, professor_id = _a.professor_id, link = _a.link;
+                    return [4 /*yield*/, examService.newExam({
+                            name: name_1,
+                            type: type,
+                            subject_id: Number(subject_id),
+                            professor_id: Number(professor_id),
+                            link: link
+                        })];
                 case 1:
-                    connectionManager = _a.sent();
-                    connection = connectionManager.create({
-                        name: "default",
-                        type: "postgres",
-                        url: process.env.DATABASE_URL,
-                        entities: ["".concat(process.env.NODE_ENV === "production" ? "dist" : "src", "/entities/*.*")],
-                        ssl: process.env.NODE_ENV === "production"
-                    });
-                    return [4 /*yield*/, connection.connect()];
+                    result = _b.sent();
+                    res.send(result);
+                    return [3 /*break*/, 3];
                 case 2:
-                    _a.sent();
-                    return [2 /*return*/, connection];
+                    e_1 = _b.sent();
+                    if (e_1.name === "ExistingExamError")
+                        res.status(403).send(e_1.message);
+                    if (e_1.name === "ExamError")
+                        res.status(404).send(e_1.message);
+                    next(e_1);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
 }
-exports["default"] = connect;
+exports.newExam = newExam;

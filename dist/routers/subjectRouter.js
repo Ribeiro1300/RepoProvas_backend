@@ -19,12 +19,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 exports.__esModule = true;
-/* eslint-disable @typescript-eslint/no-unused-vars */
-var app_1 = __importStar(require("./app"));
-var port = process.env.PORT;
-(0, app_1.init)().then(function () {
-    app_1["default"].listen(port, function () {
-        console.log("Server running on port " + port);
-        console.log("database url " + process.env.DATABASE_URL);
-    });
-});
+var express_1 = require("express");
+var subjectController = __importStar(require("../controllers/subjectController"));
+var router = (0, express_1.Router)();
+router.get("/subjects", subjectController.getAllSubjects);
+// [
+//   {
+//     id: number,
+//     subject: string,
+//     semester: string,
+//   },
+// ];
+exports["default"] = router;
