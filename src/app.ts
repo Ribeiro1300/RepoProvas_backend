@@ -5,7 +5,7 @@ import "reflect-metadata";
 import professorRouter from "./routers/professorRouter";
 import subjectRouter from "./routers/subjectRouter";
 import examRouter from "./routers/examRouter";
-
+import serverMiddlewareErro from "./middleware/serverMiddlewareErro";
 import connectDatabase from "./database/database";
 
 import * as userController from "./controllers/userConroller";
@@ -20,6 +20,7 @@ app.use(examRouter);
 app.use(subjectRouter);
 app.use(professorRouter);
 
+app.use(serverMiddlewareErro);
 
 export async function init() {
   await connectDatabase();

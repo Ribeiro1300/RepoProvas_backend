@@ -12,7 +12,7 @@ router.get("/professors", professorController.getAllProfessors);
 //   },
 // ];
 
-router.get("/professors/:subject");
+router.get("/professors/:subject_id", professorController.getProfessorsBySubject);
 // [
 //   {
 //     id: number,
