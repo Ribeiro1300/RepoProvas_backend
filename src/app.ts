@@ -8,13 +8,9 @@ import examRouter from "./routers/examRouter";
 import serverMiddlewareErro from "./middleware/serverMiddlewareErro";
 import connectDatabase from "./database/database";
 
-import * as userController from "./controllers/userConroller";
-
 const app = express();
 app.use(cors());
 app.use(express.json());
-
-app.get("/users?:filter", userController.getUsers);
 
 app.use(examRouter);
 app.use(subjectRouter);

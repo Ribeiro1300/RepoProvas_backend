@@ -15,6 +15,6 @@ router.get("/exams/:professor_id/:subject_id?:filter", examController.getExams);
 //   },
 // ];
 
-router.post("/exams");
+router.post("/exams", examController.newExam);
 
 export default router;
