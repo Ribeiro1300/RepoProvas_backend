@@ -1,11 +1,16 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
+import * as subjectService from "../services/subjectService";
 
-async function getAllSubjects(req: Request, res: Response) {
+async function getAllSubjects(req: Request, res: Response, next: NextFunction) {
   try {
-    res.send("Olá");
+    const result = await subjectService.getSubjects();
+
+    res.send(result);
   } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
+    if (e.name === "SubjectError") {
+      return res.status(404).send(e.message);
+    }
+    next(e);
   }
 }
 

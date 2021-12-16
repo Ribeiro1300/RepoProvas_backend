@@ -3,7 +3,7 @@ import * as examController from "../controllers/examController";
 
 const router = Router();
 
-router.get("/exams/:professor/:subject?:filter", examController.getExams); //req.query
+router.get("/exams/:professor_id/:subject_id?:filter", examController.getExams); //req.query
 // [
 //   {
 //     id: number,
@@ -15,6 +15,6 @@ router.get("/exams/:professor/:subject?:filter", examController.getExams); //req
 //   },
 // ];
 
-router.post("/exams");
+router.post("/exams", examController.newExam);
 
 export default router;
