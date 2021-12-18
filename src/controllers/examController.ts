@@ -3,7 +3,11 @@ import * as examService from "../services/examService";
 
 async function getExams(req: Request, res: Response, next: NextFunction) {
   try {
-    res.send("Olá");
+    const { filter, id } = req.params;
+
+    const result = await examService.getExams(Number(id), filter);
+
+    res.send(result);
   } catch (e) {
     if (e.name === "ExamError") {
       return res.status(404).send(e.message);

@@ -25,6 +25,7 @@ export async function getProfessorBySubject(subject_id: number) {
   if (professors.length === 0) {
     throw new ProfessorError("Nenhum professor encontrado!");
   }
+
   const result = professors.map((info) => {
     return info.name;
   });
