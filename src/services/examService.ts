@@ -4,11 +4,11 @@ import { ExamByProfessorEntity, ExamBySubjectEntity } from "../entities/ExamFilt
 import { ExamError, ExistingExamError } from "../error/examError";
 import { Exam, ExamResponse } from "../protocols/Exam";
 
-export async function getExams(id: number, subject: string): Promise<ExamResponse[]> {
+export async function getExams(id: number, filter: string): Promise<ExamResponse[]> {
   let result;
-  if (subject === "subject") {
+  if (filter === "subject") {
     result = await getRepository(ExamBySubjectEntity).find({ subject_id: id });
-  } else {
+  } else if (filter === "professor") {
     result = await getRepository(ExamByProfessorEntity).find({ professor_id: id });
   }
   if (result.length === 0) throw new ExamError("Erro ao buscar a prova!");

@@ -52,7 +52,6 @@ ALTER TABLE "exams" ADD CONSTRAINT "exams_fk1" FOREIGN KEY ("professor_id") REFE
 ALTER TABLE "professor_subject" ADD CONSTRAINT "professor_subject_fk0" FOREIGN KEY ("subject_id") REFERENCES "subjects"("id");
 ALTER TABLE "professor_subject" ADD CONSTRAINT "professor_subject_fk1" FOREIGN KEY ("professor_id") REFERENCES "professors"("id");
 
-/*Disciplinas*/
 
 INSERT INTO "subjects" (name,semester) VALUES ('Cálculo 1','1º');
 INSERT INTO "subjects" (name,semester) VALUES ('Cálculo 2','2º');
@@ -62,7 +61,6 @@ INSERT INTO "subjects" (name,semester) VALUES ('Física 1','1º');
 INSERT INTO "subjects" (name,semester) VALUES ('Física 2','2º');
 
 
-/*professores*/
 
 INSERT INTO "professors" (name) VALUES ('Roberto');
 INSERT INTO "professors" (name) VALUES ('José');
@@ -73,7 +71,6 @@ INSERT INTO "professors" (name) VALUES ('Roberta');
 INSERT INTO "professors" (name) VALUES ('Andréia');
 INSERT INTO "professors" (name) VALUES ('Maria');
 
-/*professor-disciplina*/
 
 INSERT INTO "professor_subject" (subject_id,professor_id) VALUES (1,1);
 
