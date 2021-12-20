@@ -11,4 +11,6 @@ export default class SubjectEntity implements Subject {
 
   @Column()
   semester: string;
+
+  qt: number;
 }

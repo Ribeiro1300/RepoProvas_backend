@@ -5,3 +5,11 @@ export interface Exam {
   professor_id: number;
   link: string;
 }
+
+export interface ExamResponse {
+  id: number;
+  name: string;
+  type: string;
+  filter_name: string;
+  link: string;
+}

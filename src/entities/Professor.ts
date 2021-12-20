@@ -8,4 +8,6 @@ export default class ProfessorEntity implements Professor {
 
   @Column()
   name: string;
+
+  qt: number;
 }
